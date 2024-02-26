@@ -81,28 +81,18 @@ const Bar = styled.div`
 const slideIn = keyframes`
   0% {
     transform: translateX(100%);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
   }
   100% {
     transform: translateX(0);
-    opacity: 1;
   }
 `;
 
 const slideOut = keyframes`
   0% {
     transform: translateX(0);
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
   }
   100% {
     transform: translateX(100%);
-    opacity: 0;
   }
 `;
 
@@ -122,13 +112,28 @@ const Navigation = styled.div`
   border-bottom-left-radius: 5px;
   box-shadow: ${props => props.open ? '0px 8px 16px 0px rgba(0,0,0,0.2)' : 'none'};
   transition: box-shadow 0.3s ease-out;
-  animation: ${props => props.open ? css`${slideIn} 0.5s ease-in-out` : css`${slideOut} 0.5s ease-in-out forwards`};
+  animation: ${props => props.open ? css`${slideIn} 0.5s forwards` : (props.unmounting ? css`${slideOut} 0.5s forwards` : 'none')};
 `
  
 
 export default function Header() {
 
     const [open, setOpen] = useState(false);
+    const [unmounting, setUnmounting] = useState(false);
+    const [renderNav, setRenderNav] = useState(false);
+
+    const handleMenuClick = () => {
+      if (open) {
+        setUnmounting(true);
+        setTimeout(() => {
+          setRenderNav(false);
+          setUnmounting(false);
+        }, 500); // delay equal to the animation duration
+      } else {
+        setRenderNav(true);
+      }
+      setOpen(!open);
+    };
 
     const navigate = useNavigate();
 
@@ -145,22 +150,20 @@ export default function Header() {
 
           <MenuContainer>
 
-            <HamburgerMenuContainer onClick={() => setOpen(!open)}>
+            <HamburgerMenuContainer onClick={handleMenuClick}>
               <Bar open={open} />
               <Bar open={open} />
               <Bar open={open} />
             </HamburgerMenuContainer>
 
-              <MenuText>Menu</MenuText>
+            <MenuText>Menu</MenuText>
 
-            <Navigation open={open}>
-
-              <StyledLink to="/">Accueil</StyledLink>
-              <StyledLink to="/signup">S'inscrire</StyledLink>
-              <StyledLink to="/login">Se connecter</StyledLink>
-              <StyledLink to="/products">Nos produits</StyledLink>
-
-            </Navigation>
+              {renderNav && <Navigation open={open} unmounting={unmounting}>
+                <StyledLink to="/">Accueil</StyledLink>
+                <StyledLink to="/signup">S'inscrire</StyledLink>
+                <StyledLink to="/login">Se connecter</StyledLink>
+                <StyledLink to="/products">Nos produits</StyledLink>
+              </Navigation>}
 
           </MenuContainer>
 
