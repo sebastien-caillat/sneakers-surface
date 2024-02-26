@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 import { StyledLink } from "../../utils/Atoms";
 import colors from "../../utils/colors";
@@ -14,6 +14,8 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
 `
 
+// Styled components of the logo
+
 const LogoContainer = styled.div`
     display: flex;
     cursor: pointer;
@@ -25,11 +27,14 @@ const BrandLogo = styled.img`
     height: 200px;
 `
 
+// Styled components of the hamburger menu and its items
+
 const MenuContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-right: 5%;
+    padding-right: 5%;
+    z-index: 2;
 `;
 
 const MenuText = styled.p`
@@ -71,19 +76,53 @@ const Bar = styled.div`
   `}
 `
 
+// Styled component of the navigation menu that is displayed when the hamburger icon is clicked
+
+const slideIn = keyframes`
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+const slideOut = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+`;
+
 const Navigation = styled.div`
-  display: ${props => props.open ? 'flex' : 'none'};
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: absolute;
-  background-color: ${colors.backgroundalt};
-  width: 400px;
-  height: 400px; 
+  z-index: 1;
+  background-color: ${colors.backgroundbutton};
+  width: 300px;
   top: 150px;
+  right: 0;
   padding: 10px;
-  border-radius: 20px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: ${props => props.open ? '0px 8px 16px 0px rgba(0,0,0,0.2)' : 'none'};
+  transition: box-shadow 0.3s ease-out;
+  animation: ${props => props.open ? css`${slideIn} 0.5s ease-in-out` : css`${slideOut} 0.5s ease-in-out forwards`};
 `
  
 

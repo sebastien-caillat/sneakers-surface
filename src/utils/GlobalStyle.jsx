@@ -37,7 +37,7 @@ const StyledGlobalStyle = createGlobalStyle`
     button {
         font-family: 'Roboto', sans-serif;
         font-size: 24px;
-        background-color: ${colors.backgroundalt};
+        background-color: ${colors.backgroundbutton};
         color: ${colors.text};
         border: none;
         border-radius: 20px;

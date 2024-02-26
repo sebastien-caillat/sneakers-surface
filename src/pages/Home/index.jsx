@@ -5,7 +5,10 @@ import colors from '../../utils/colors';
 
 const GlobalContainer = styled.div`
     width: 100%;
-    margin: 0% 5% 0% 5%;
+`
+
+const TitleContainer = styled.div`
+    margin-left: 5%;
 `
 
 const MainTitle = styled.h1`
@@ -19,24 +22,49 @@ const PromiseText = styled.p`
     }
 `
 
-const SeeProductsButton = styled.button`
+const StyledButton = styled.button`
     width: 200px;
     height: 50px;
 `
+
+const JoinOurCommunitySection = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0 50px 0;
+    padding-bottom: 60px;
+    background-color: ${colors.backgroundalt};
+`
+
+const JoinUsText = styled.p`
+    margin-top: -10px;
+    margin-bottom: 40px;
+`
+
 
 export default function Home() {
 
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/products');
+    const handleClick = (path) => {
+        navigate(path);
     }
 
     return(
         <GlobalContainer>
-            <MainTitle>Sneakers Surface</MainTitle>
-            <PromiseText>LA PLATEFORME INCONTOURNABLE POUR TOUS LES <span>SNEAKERS</span> ADDICTS</PromiseText>
-            <SeeProductsButton onClick={handleClick}>Voir les produits</SeeProductsButton>
+
+            <TitleContainer>
+                <MainTitle>Sneakers Surface</MainTitle>
+                <PromiseText>LA PLATEFORME INCONTOURNABLE POUR TOUS LES <span>SNEAKERS</span> ADDICTS</PromiseText>
+                <StyledButton onClick={() => handleClick('/products')}>Voir les produits</StyledButton>
+            </TitleContainer>
+
+            <JoinOurCommunitySection>
+                <h2>Pas encore inscrit ?</h2>
+                <JoinUsText>Rejoignez notre communauté et découvrez des milliers de modèles disponibles</JoinUsText>
+                <StyledButton onClick={() => handleClick('/signup')}>S'inscrire</StyledButton>
+            </JoinOurCommunitySection>
+
         </GlobalContainer>
     )
 }

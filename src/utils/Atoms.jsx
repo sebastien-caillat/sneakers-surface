@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import colors from './colors'
 
 export const StyledLink = styled(Link)`
-  font-size: 60px;
+  font-size: 40px;
   color: ${colors.text};
   text-decoration: none;
   margin: 1%;
