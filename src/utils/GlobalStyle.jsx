@@ -35,6 +35,7 @@ const StyledGlobalStyle = createGlobalStyle`
     }
 
     button {
+        height: 50px;
         font-family: 'Roboto', sans-serif;
         font-size: 24px;
         background-color: ${colors.backgroundbutton};

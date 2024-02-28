@@ -24,7 +24,6 @@ const PromiseText = styled.p`
 
 const StyledButton = styled.button`
     width: 200px;
-    height: 50px;
 `
 
 const JoinOurCommunitySection = styled.div`

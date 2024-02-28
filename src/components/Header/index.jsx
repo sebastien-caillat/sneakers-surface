@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext";
+import { removeToken } from "../../helpers";
 import styled, { keyframes, css } from "styled-components";
-
 import { StyledLink } from "../../utils/Atoms";
-import colors from "../../utils/colors";
 
+import colors from "../../utils/colors";
 import sneakerslogo from "../../assets/sneakersurface.svg";
 
 const HeaderContainer = styled.div`
@@ -27,6 +28,15 @@ const BrandLogo = styled.img`
     height: 200px;
 `
 
+// Styled components of the Login/Logout Buttons
+
+const AuthButton = styled.button`
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    margin: 0 20px 0 0;
+`
+
 // Styled components of the hamburger menu and its items
 
 const MenuContainer = styled.div`
@@ -47,7 +57,7 @@ const HamburgerMenuContainer = styled.div`
   height: 20px;
   position: relative;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 20px;
 `
 
 const Bar = styled.div`
@@ -113,8 +123,7 @@ const Navigation = styled.div`
   box-shadow: ${props => props.open ? '0px 8px 16px 0px rgba(0,0,0,0.2)' : 'none'};
   transition: box-shadow 0.3s ease-out;
   animation: ${props => props.open ? css`${slideIn} 0.5s forwards` : (props.unmounting ? css`${slideOut} 0.5s forwards` : 'none')};
-`
- 
+` 
 
 export default function Header() {
 
@@ -136,19 +145,49 @@ export default function Header() {
     };
 
     const navigate = useNavigate();
+    const { user } = useAuthContext();
 
     const handleClick = () => {
         navigate('/');
     }
 
+    const handleLogout = () => {
+      removeToken();
+      navigate("/", { replace: true});
+    }
+
     return(
         <HeaderContainer>
 
-            <LogoContainer onClick={handleClick}>
-              <BrandLogo src={sneakerslogo} alt="Sneakers Surface Logo"/>
-            </LogoContainer>
+          <LogoContainer onClick={handleClick}>
+            <BrandLogo src={sneakerslogo} alt="Sneakers Surface Logo"/>
+          </LogoContainer>
 
           <MenuContainer>
+
+            <div>
+
+              { user ? (
+                <>
+                  <AuthButton href="/profile" type="link">
+                    {user.username}
+                  </AuthButton>
+                  <AuthButton type="primary" onClick={handleLogout}>
+                    Logout
+                  </AuthButton>
+                </>
+              ) : (
+                <>
+                  <AuthButton href="/signin" type="link">
+                    Login
+                  </AuthButton>
+                  <AuthButton href="/signup" type="primary">
+                    SignUp
+                  </AuthButton>
+                </>
+              )}
+
+            </div>
 
             <HamburgerMenuContainer onClick={handleMenuClick}>
               <Bar open={open} />
@@ -160,8 +199,7 @@ export default function Header() {
 
               {renderNav && <Navigation open={open} unmounting={unmounting}>
                 <StyledLink to="/">Accueil</StyledLink>
-                <StyledLink to="/signup">S'inscrire</StyledLink>
-                <StyledLink to="/login">Se connecter</StyledLink>
+                <StyledLink to="/profile">Mon profil</StyledLink>
                 <StyledLink to="/products">Nos produits</StyledLink>
               </Navigation>}
 
