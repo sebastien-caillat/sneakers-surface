@@ -23,7 +23,7 @@ root.render(
                     <Route exact path='/' element={<Home />} />
                     <Route path='/signup' element={<Signup />} />
                     <Route path='/signin' element={<Signin />} />
-                    <Route path='/profile' element={getToken() ? <Profile /> : <Navigate to='/signin' />} />
+                    <Route path='/profile/:username' element={getToken() ? <Profile /> : <Navigate to='/signin' />} />
                     <Route path='products' element=""></Route>
                 </Routes>
             </Router>

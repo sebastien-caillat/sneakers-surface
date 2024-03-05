@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import { removeToken } from "../../helpers";
 import styled, { keyframes, css } from "styled-components";
@@ -145,7 +145,7 @@ export default function Header() {
     };
 
     const navigate = useNavigate();
-    const { user } = useAuthContext();
+    const { user, setUser } = useAuthContext();
 
     const handleClick = () => {
         navigate('/');
@@ -153,7 +153,8 @@ export default function Header() {
 
     const handleLogout = () => {
       removeToken();
-      navigate("/", { replace: true});
+      setUser(null);
+      navigate("/signin", { replace: true});
     }
 
     return(
@@ -169,21 +170,27 @@ export default function Header() {
 
               { user ? (
                 <>
-                  <AuthButton href="/profile" type="link">
-                    {user.username}
-                  </AuthButton>
+                  <Link to={`/profile/${user.username}`}>
+                    <AuthButton type="link">
+                      {user.username}
+                    </AuthButton>
+                  </Link>
                   <AuthButton type="primary" onClick={handleLogout}>
                     Logout
                   </AuthButton>
                 </>
               ) : (
                 <>
-                  <AuthButton href="/signin" type="link">
-                    Login
-                  </AuthButton>
-                  <AuthButton href="/signup" type="primary">
-                    SignUp
-                  </AuthButton>
+                  <Link to="/signin">
+                    <AuthButton href="/signin" type="link">
+                      Login
+                    </AuthButton>
+                  </Link>
+                  <Link to="/signup">
+                    <AuthButton href="/signup" type="primary">
+                      SignUp
+                    </AuthButton>
+                  </Link>
                 </>
               )}
 
@@ -199,7 +206,7 @@ export default function Header() {
 
               {renderNav && <Navigation open={open} unmounting={unmounting}>
                 <StyledLink to="/">Accueil</StyledLink>
-                <StyledLink to="/profile">Mon profil</StyledLink>
+                <StyledLink to={`/profile/${user.username}`}>Mon profil</StyledLink>
                 <StyledLink to="/products">Nos produits</StyledLink>
               </Navigation>}
 

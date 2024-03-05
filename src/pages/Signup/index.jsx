@@ -27,7 +27,7 @@ const FormContainer = styled.div`
 
 const StyledCard = styled(Card)`
   width: 700px;
-  height: 450px;
+  height: 500px;
 `
 
 export default function Signup() {
@@ -125,6 +125,7 @@ export default function Signup() {
                   rules={[
                     {
                       required: true,
+                      type: "string"
                     },
                   ]}
                 >

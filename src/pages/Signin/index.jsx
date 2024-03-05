@@ -67,7 +67,7 @@ export default function SignIn() {
                 
                 message.success(`Rebonjour, ${data.user.username}!`);
 
-                navigate("/profile", { replace: true });
+                navigate("/", { replace: true });
             }
         } catch (error) {
             console.error(error);
