@@ -17,6 +17,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { API } from "../../constant";
 import { setToken } from "../../helpers";
 import styled from "styled-components";
+import colors from "../../utils/colors";
 
 const FormContainer = styled.div`
   display: flex;
@@ -29,6 +30,22 @@ const FormContainer = styled.div`
 const StyledCard = styled(Card)`
   width: 700px;
   height: 350px;
+  background-color: ${colors.background};
+  border: none;
+  .ant-card-head-title {
+    color: ${colors.text};
+  }
+`
+
+const StyledFormItem = styled(Form.Item)`
+    .ant-form-item-label > label {
+        color: ${colors.text};
+    }
+`
+
+const StyledTypo = styled(Typography.Paragraph)`
+    color: ${colors.text};
+    margin-top: 16px;
 `
 
 export default function SignIn() {
@@ -98,7 +115,7 @@ export default function SignIn() {
                                 onFinish={onFinish}
                                 autoComplete="off"
                             >
-                                <Form.Item
+                                <StyledFormItem
                                     label="Email"
                                     name="email"
                                     rules={[
@@ -109,9 +126,9 @@ export default function SignIn() {
                                     ]}
                                 >
                                     <Input placeholder="Email address" />
-                                </Form.Item>
+                                </StyledFormItem>
 
-                                <Form.Item
+                                <StyledFormItem
                                     label="Password"
                                     name="password"
                                     rules={[
@@ -121,9 +138,9 @@ export default function SignIn() {
                                     ]}
                                 >
                                     <Input.Password placeholder="Password" />
-                                </Form.Item>
+                                </StyledFormItem>
 
-                                <Form.Item>
+                                <StyledFormItem>
                                     <Button
                                         type="primary"
                                         htmlType="submit"
@@ -131,10 +148,10 @@ export default function SignIn() {
                                     >
                                         Login {isLoading && <Spin size="small" /> }
                                     </Button>
-                                    <Typography.Paragraph className="form_help_text">
+                                    <StyledTypo className="form_help_text">
                                         Vous n'avez pas de compte? <Link to="/signup">Inscrivez-vous</Link>
-                                    </Typography.Paragraph>
-                                </Form.Item>
+                                    </StyledTypo>
+                                </StyledFormItem>
                             </Form>
                         </StyledCard>
                     </Col>

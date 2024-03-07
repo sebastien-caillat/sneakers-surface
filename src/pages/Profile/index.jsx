@@ -1,13 +1,39 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+import colors from "../../utils/colors";
+
+import { useParams, Navigate } from "react-router-dom";
 import { Button, Card, Col, Form, Input, message, Row, Spin } from "antd";
 import { useAuthContext} from "../../context/AuthContext";
 import { API } from "../../constant";
 import { getToken } from "../../helpers";
 
+const StyledCard = styled(Card)`
+    display: flex;
+    justify-content: center;
+    background-color: ${colors.background};
+    border: none;
+`
+
+const StyledFormItem = styled(Form.Item)`
+    .ant-form-item-label > label {
+        color: ${colors.text};
+    }
+`
+
 export default function Profile() {
 
     const [loading, setLoading] = useState(false);
     const { user, isLoading, setUser } = useAuthContext();
+    const { username } = useParams();
+
+    if (isLoading) {
+        return <Spin />;
+    }
+    
+    if(!user || username !== user.username) {
+        return <Navigate to="/error" />
+    }
 
     const handleProfileUpdate = async(data) => {
         setLoading(true);
@@ -42,7 +68,7 @@ export default function Profile() {
     }
 
     return(
-        <Card className="profile_page_card">
+        <StyledCard className="profile_page_card">
             <Form
                  layout="vertical"
                  initialValues={{
@@ -55,7 +81,7 @@ export default function Profile() {
             >
                 <Row gutter={[16, 16]}>
                     <Col md={8} lg={8} sm={24} xs={24}>
-                        <Form.Item
+                        <StyledFormItem
                             label="Username"
                             name="username"
                             rules={[
@@ -67,11 +93,11 @@ export default function Profile() {
                             ]}
                         >
                             <Input placeholder="Username" />
-                        </Form.Item>
+                        </StyledFormItem>
                     </Col>
 
                     <Col md={8} lg={8} sm={24} xs={24}>
-                        <Form.Item
+                        <StyledFormItem
                             label="Email"
                             name="email"
                             rules={[
@@ -83,39 +109,37 @@ export default function Profile() {
                             ]}
                         >
                             <Input placeholder="Email" />
-                        </Form.Item>
+                        </StyledFormItem>
                     </Col>
 
                     <Col md={8} lg={8} sm={24} xs={24}>
-                        <Form.Item
+                        <StyledFormItem
                             label="First Name"
                             name="firstName"
                             rules={[
                                 {
-                                    required: true,
                                     message: "First Name is required !",
                                     type: "string",
                                 },
                             ]}
                         >
                             <Input placeholder="First Name" />
-                        </Form.Item>
+                        </StyledFormItem>
                     </Col>
 
                     <Col md={8} lg={8} sm={24} xs={24}>
-                        <Form.Item
+                        <StyledFormItem
                             label="Last Name"
                             name="lastName"
                             rules={[
                                 {
-                                    required: true,
                                     message: "Last Name is required !",
                                     type: "string",
                                 },
                             ]}
                         >
                             <Input placeholder="Last Name" />
-                        </Form.Item>
+                        </StyledFormItem>
                     </Col>
                 </Row>
                 <Button
@@ -133,6 +157,6 @@ export default function Profile() {
                     )}
                 </Button>
             </Form>
-        </Card>
+        </StyledCard>
     );
 };

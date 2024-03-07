@@ -31,10 +31,14 @@ const BrandLogo = styled.img`
 // Styled components of the Login/Logout Buttons
 
 const AuthButton = styled.button`
-    width: 100px;
+    min-width: 100px;
     height: 40px;
     border-radius: 5px;
     margin: 0 20px 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 10px;
 `
 
 // Styled components of the hamburger menu and its items

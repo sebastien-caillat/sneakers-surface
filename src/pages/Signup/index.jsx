@@ -16,6 +16,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { API } from "../../constant";
 import { setToken } from "../../helpers"; 
 import styled from "styled-components";
+import colors from "../../utils/colors";
 
 const FormContainer = styled.div`
   display: flex;
@@ -28,6 +29,21 @@ const FormContainer = styled.div`
 const StyledCard = styled(Card)`
   width: 700px;
   height: 500px;
+  background-color: ${colors.background};
+  border: none;
+  .ant-card-head-title {
+    color: ${colors.text};
+  }
+`
+
+const StyledFormItem = styled(Form.Item)`
+    .ant-form-item-label > label {
+        color: ${colors.text};
+    }
+`
+
+const StyledTypo = styled(Typography.Paragraph)`
+  color: ${colors.text};
 `
 
 export default function Signup() {
@@ -93,7 +109,7 @@ export default function Signup() {
                 onFinish={onFinish}
                 autoComplete="off"
               >
-                <Form.Item
+                <StyledFormItem
                   label="Username"
                   name="username"
                   rules={[
@@ -104,9 +120,9 @@ export default function Signup() {
                   ]}
                 >
                   <Input placeholder="Username" />
-                </Form.Item>
+                </StyledFormItem>
 
-                <Form.Item
+                <StyledFormItem
                   label="Email"
                   name="email"
                   rules={[
@@ -117,9 +133,9 @@ export default function Signup() {
                   ]}
                 >
                   <Input placeholder="Email address" />
-                </Form.Item>
+                </StyledFormItem>
 
-                <Form.Item
+                <StyledFormItem
                   label="Password"
                   name="password"
                   rules={[
@@ -130,9 +146,9 @@ export default function Signup() {
                   ]}
                 >
                   <Input.Password placeholder="Password" />
-                </Form.Item>
+                </StyledFormItem>
 
-                <Form.Item>
+                <StyledFormItem>
                   <Button 
                     type="primary" 
                     htmlType="submit" 
@@ -140,13 +156,13 @@ export default function Signup() {
                   >
                     Submit {isLoading && <Spin size="small"/>}
                   </Button>
-                </Form.Item>
+                </StyledFormItem>
 
               </Form>
 
-              <Typography.Paragraph className="form_help_text">
+              <StyledTypo className="form_help_text">
                 Vous avez déjà un compte ? <Link to="/signin">Connectez-vous</Link>
-              </Typography.Paragraph>
+              </StyledTypo>
             </StyledCard>
           </Col>
         </Row>
