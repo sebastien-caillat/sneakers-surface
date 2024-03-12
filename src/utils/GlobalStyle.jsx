@@ -19,19 +19,31 @@ const StyledGlobalStyle = createGlobalStyle`
 
     h1 {
         font-size: 64px;
+        @media(max-width: 768px) {
+            font-size: 40px;
+        }
     }
 
     h2 {
         font-size: 48px;
+        @media(max-width: 768px) {
+            font-size: 32px;
+        }
     }
 
     h3 {
         font-size: 32px;
+        @media(max-width: 768px) {
+            font-size: 24px;
+        }
     }
 
     p {
         font-family: 'Roboto', sans-serif;
         font-size: 24px;
+        @media(max-width: 768px) {
+            font-size: 16px;
+        }
     }
 
     button {
@@ -43,6 +55,10 @@ const StyledGlobalStyle = createGlobalStyle`
         border: none;
         border-radius: 20px;
         cursor: pointer;
+        @media(max-width: 768px) {
+            height: 40px;
+            font-size: 16px;
+        }
         &:hover {
             transform: scale(1.1);
     }

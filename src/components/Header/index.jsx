@@ -21,14 +21,24 @@ const LogoContainer = styled.div`
     display: flex;
     cursor: pointer;
     margin-left: 2.5%;
+    @media(max-width: 768px) {
+        margin-left: 0;
+    }
 `
 
 const BrandLogo = styled.img`
     width: 200px;
     height: 200px;
+    @media(max-width: 768px) {
+        width: 150px;
+        height: 150px;
+    }
 `
 
 // Styled components of the Login/Logout Buttons
+
+const AuthSection = styled.div`
+`
 
 const AuthButton = styled.button`
     min-width: 100px;
@@ -39,6 +49,9 @@ const AuthButton = styled.button`
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0 10px;
+    @media(max-width: 768px) {
+      margin: 5px 20px 5px 0px;
+    }
 `
 
 // Styled components of the hamburger menu and its items
@@ -70,6 +83,9 @@ const Bar = styled.div`
   background-color: #ffffff;
   margin: 5px 0;
   transition: all 0.3s;
+  @media(max-width: 768px) {
+    width: 140%;
+  }
 
   ${props => props.open && `
     &:nth-child(1) {
@@ -170,7 +186,7 @@ export default function Header() {
 
           <MenuContainer>
 
-            <div>
+            <AuthSection>
 
               { user ? (
                 <>
@@ -198,7 +214,7 @@ export default function Header() {
                 </>
               )}
 
-            </div>
+            </AuthSection>
 
             <HamburgerMenuContainer onClick={handleMenuClick}>
               <Bar open={open} />

@@ -8,17 +8,32 @@ const GlobalContainer = styled.div`
 `
 
 const TitleContainer = styled.div`
+    margin-top: -2%;
     margin-left: 5%;
+    @media(max-width: 1024px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0px 25px 0px 25px;
+    }
 `
 
 const MainTitle = styled.h1`
-
+    @media(max-width: 1024px) {
+        margin-bottom: 64px;
+    }
 `
 const PromiseText = styled.p`
     margin-top: -32px;
     & span {
         font-weight: bold;
         color: ${colors.textalt};
+    }
+    @media(max-width: 1024px) {
+        margin-right: 2%;
+        line-height: 1.4;
+        text-align: center;
+        margin-bottom: 32px;
     }
 `
 
@@ -33,11 +48,20 @@ const JoinOurCommunitySection = styled.div`
     margin: 50px 0 50px 0;
     padding-bottom: 60px;
     background-color: ${colors.backgroundalt};
+    @media(max-width: 768px) {
+        padding-bottom: 30px;
+    }
 `
 
 const JoinUsText = styled.p`
     margin-top: -10px;
     margin-bottom: 40px;
+    @media(max-width: 1024px) {
+        text-align: center;
+    }
+    @media(max-width: 768px) {
+        margin-bottom: 20px;
+    }
 `
 
 
