@@ -15,10 +15,23 @@ const StyledCard = styled(Card)`
     border: none;
 `
 
+const StyledForm = styled(Form)`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+`
+
 const StyledFormItem = styled(Form.Item)`
     .ant-form-item-label > label {
         color: ${colors.text};
     }
+`
+
+const StyledButton = styled(Button)`
+    min-width: 150px;
+    background-color: ${colors.backgroundbutton};
+    margin-top: 24px;
 `
 
 export default function Profile() {
@@ -69,7 +82,7 @@ export default function Profile() {
 
     return(
         <StyledCard className="profile_page_card">
-            <Form
+            <StyledForm
                  layout="vertical"
                  initialValues={{
                         username: user?.username,
@@ -80,7 +93,7 @@ export default function Profile() {
                  onFinish={handleProfileUpdate}
             >
                 <Row gutter={[16, 16]}>
-                    <Col md={8} lg={8} sm={24} xs={24}>
+                    <Col span={24}>
                         <StyledFormItem
                             label="Username"
                             name="username"
@@ -96,7 +109,7 @@ export default function Profile() {
                         </StyledFormItem>
                     </Col>
 
-                    <Col md={8} lg={8} sm={24} xs={24}>
+                    <Col span={24}>
                         <StyledFormItem
                             label="Email"
                             name="email"
@@ -112,7 +125,7 @@ export default function Profile() {
                         </StyledFormItem>
                     </Col>
 
-                    <Col md={8} lg={8} sm={24} xs={24}>
+                    <Col span={24}>
                         <StyledFormItem
                             label="First Name"
                             name="firstName"
@@ -127,7 +140,7 @@ export default function Profile() {
                         </StyledFormItem>
                     </Col>
 
-                    <Col md={8} lg={8} sm={24} xs={24}>
+                    <Col span={24}>
                         <StyledFormItem
                             label="Last Name"
                             name="lastName"
@@ -142,7 +155,7 @@ export default function Profile() {
                         </StyledFormItem>
                     </Col>
                 </Row>
-                <Button
+                <StyledButton
                     className="profile_save_btn"
                     htmlType="submit"
                     type="primary"
@@ -155,8 +168,8 @@ export default function Profile() {
                     ) : (
                         "Save"
                     )}
-                </Button>
-            </Form>
+                </StyledButton>
+            </StyledForm>
         </StyledCard>
     );
 };

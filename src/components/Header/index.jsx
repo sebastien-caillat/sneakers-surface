@@ -13,6 +13,10 @@ const HeaderContainer = styled.div`
     width: 100%;
     align-items: center;
     justify-content: space-between;
+
+    @media(max-width: 768px) {
+      flex-direction: column;
+    }
 `
 
 // Styled components of the logo
@@ -21,8 +25,10 @@ const LogoContainer = styled.div`
     display: flex;
     cursor: pointer;
     margin-left: 2.5%;
+    width: 100%;
     @media(max-width: 768px) {
         margin-left: 0;
+        justify-content: center;
     }
 `
 
@@ -30,8 +36,8 @@ const BrandLogo = styled.img`
     width: 200px;
     height: 200px;
     @media(max-width: 768px) {
-        width: 150px;
-        height: 150px;
+        width: 170px;
+        height: 170px;
     }
 `
 
@@ -50,7 +56,7 @@ const AuthButton = styled.button`
     text-overflow: ellipsis;
     padding: 0 10px;
     @media(max-width: 768px) {
-      margin: 5px 20px 5px 0px;
+      margin: 0 0 0 24px;
     }
 `
 
@@ -62,11 +68,20 @@ const MenuContainer = styled.div`
     justify-content: flex-end;
     padding-right: 5%;
     z-index: 2;
+    width: 100%;
+    @media(max-width: 768px) {
+      justify-content: space-around;
+      padding: 0;
+      
+    }
 `;
 
 const MenuText = styled.p`
     position: relative;
     top: 10px;
+    @media(max-width: 768px) {
+      display: none;
+    }
 `;
 
 const HamburgerMenuContainer = styled.div`
@@ -75,6 +90,10 @@ const HamburgerMenuContainer = styled.div`
   position: relative;
   cursor: pointer;
   margin-right: 20px;
+
+  @media(max-width: 768px) {
+    // margin-right: 0;
+  }
 `
 
 const Bar = styled.div`
@@ -84,7 +103,7 @@ const Bar = styled.div`
   margin: 5px 0;
   transition: all 0.3s;
   @media(max-width: 768px) {
-    width: 140%;
+    width: 130%;
   }
 
   ${props => props.open && `
@@ -143,6 +162,10 @@ const Navigation = styled.div`
   box-shadow: ${props => props.open ? '0px 8px 16px 0px rgba(0,0,0,0.2)' : 'none'};
   transition: box-shadow 0.3s ease-out;
   animation: ${props => props.open ? css`${slideIn} 0.5s forwards` : (props.unmounting ? css`${slideOut} 0.5s forwards` : 'none')};
+
+  @media(max-width: 768px) {
+    top: 235px;
+  }
 ` 
 
 export default function Header() {
@@ -226,7 +249,7 @@ export default function Header() {
 
               {renderNav && <Navigation open={open} unmounting={unmounting}>
                 <StyledLink to="/">Accueil</StyledLink>
-                <StyledLink to={`/profile/${user.username}`}>Mon profil</StyledLink>
+                <StyledLink to={user ? `/profile/${user.username}` : "/signup"}>Mon profil</StyledLink>
                 <StyledLink to="/products">Nos produits</StyledLink>
               </Navigation>}
 

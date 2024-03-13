@@ -34,6 +34,15 @@ const StyledCard = styled(Card)`
   border: none;
   .ant-card-head-title {
     color: ${colors.text};
+    @media(max-width: 768px) {
+        font-size: 18px;
+        text-align: center;
+    }
+  }
+  @media(max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
   }
 `
 
@@ -46,6 +55,11 @@ const StyledFormItem = styled(Form.Item)`
 const StyledTypo = styled(Typography.Paragraph)`
     color: ${colors.text};
     margin-top: 16px;
+`
+
+const StyledButton = styled(Button)`
+    min-width: 120px;
+    background-color: ${colors.backgroundbutton};
 `
 
 export default function SignIn() {
@@ -141,13 +155,13 @@ export default function SignIn() {
                                 </StyledFormItem>
 
                                 <StyledFormItem>
-                                    <Button
+                                    <StyledButton
                                         type="primary"
                                         htmlType="submit"
                                         className="login_submit_btn"
                                     >
                                         Login {isLoading && <Spin size="small" /> }
-                                    </Button>
+                                    </StyledButton>
                                     <StyledTypo className="form_help_text">
                                         Vous n'avez pas de compte? <Link to="/signup">Inscrivez-vous</Link>
                                     </StyledTypo>

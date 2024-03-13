@@ -33,6 +33,13 @@ const StyledCard = styled(Card)`
   border: none;
   .ant-card-head-title {
     color: ${colors.text};
+    @media(max-width: 768px) {
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+  @media(max-width: 768px) {
+    width: 95%;
   }
 `
 
@@ -44,6 +51,11 @@ const StyledFormItem = styled(Form.Item)`
 
 const StyledTypo = styled(Typography.Paragraph)`
   color: ${colors.text};
+`
+
+const StyledButton = styled(Button)`
+    min-width: 120px;
+    background-color: ${colors.backgroundbutton};
 `
 
 export default function Signup() {
@@ -91,7 +103,7 @@ export default function Signup() {
     <Fragment>
       <FormContainer>
         <Row align="middle">
-          <Col offset={0}>
+          <Col>
             <StyledCard title="Rejoignez-nous !">
               {error ? (
                 <Alert
@@ -149,13 +161,13 @@ export default function Signup() {
                 </StyledFormItem>
 
                 <StyledFormItem>
-                  <Button 
+                  <StyledButton 
                     type="primary" 
                     htmlType="submit" 
                     className="login_submit_btn"
                   >
                     Submit {isLoading && <Spin size="small"/>}
-                  </Button>
+                  </StyledButton>
                 </StyledFormItem>
 
               </Form>
