@@ -10,4 +10,8 @@ export const StyledLink = styled(Link)`
   &:visited {
     color: ${colors.text};
   }
+  &&:hover {
+    text-decoration: underline;
+    transform: scale(1.1);
+  }
 `

@@ -12,12 +12,20 @@ const HeaderContainer = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     @media(max-width: 768px) {
       flex-direction: column;
     }
 `
+
+const HeaderResponsiveMenu = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5%;
+`
+
 
 // Styled components of the logo
 
@@ -44,20 +52,20 @@ const BrandLogo = styled.img`
 // Styled components of the Login/Logout Buttons
 
 const AuthSection = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5%;
 `
 
 const AuthButton = styled.button`
     min-width: 100px;
     height: 40px;
     border-radius: 5px;
-    margin: 0 20px 0 0;
+    margin: 0 15px 0 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0 10px;
-    @media(max-width: 768px) {
-      margin: 0 0 0 24px;
-    }
 `
 
 // Styled components of the hamburger menu and its items
@@ -66,14 +74,9 @@ const MenuContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-right: 5%;
+    margin-right: 5%;
     z-index: 2;
     width: 100%;
-    @media(max-width: 768px) {
-      justify-content: space-around;
-      padding: 0;
-      
-    }
 `;
 
 const MenuText = styled.p`
@@ -89,11 +92,7 @@ const HamburgerMenuContainer = styled.div`
   height: 20px;
   position: relative;
   cursor: pointer;
-  margin-right: 20px;
-
-  @media(max-width: 768px) {
-    // margin-right: 0;
-  }
+  margin-right: 30px;
 `
 
 const Bar = styled.div`
@@ -206,39 +205,38 @@ export default function Header() {
           <LogoContainer onClick={handleClick}>
             <BrandLogo src={sneakerslogo} alt="Sneakers Surface Logo"/>
           </LogoContainer>
+        <HeaderResponsiveMenu>
+          <AuthSection>
+
+            { user ? (
+              <>
+                <Link to={`/profile/${user.username}`}>
+                  <AuthButton type="link">
+                    {user.username}
+                  </AuthButton>
+                </Link>
+                <AuthButton type="primary" onClick={handleLogout}>
+                  Logout
+                </AuthButton>
+              </>
+            ) : (
+              <>
+                <Link to="/signin">
+                  <AuthButton href="/signin" type="link">
+                    Login
+                  </AuthButton>
+                </Link>
+                <Link to="/signup">
+                  <AuthButton href="/signup" type="primary">
+                    SignUp
+                  </AuthButton>
+                </Link>
+              </>
+            )}
+
+          </AuthSection>
 
           <MenuContainer>
-
-            <AuthSection>
-
-              { user ? (
-                <>
-                  <Link to={`/profile/${user.username}`}>
-                    <AuthButton type="link">
-                      {user.username}
-                    </AuthButton>
-                  </Link>
-                  <AuthButton type="primary" onClick={handleLogout}>
-                    Logout
-                  </AuthButton>
-                </>
-              ) : (
-                <>
-                  <Link to="/signin">
-                    <AuthButton href="/signin" type="link">
-                      Login
-                    </AuthButton>
-                  </Link>
-                  <Link to="/signup">
-                    <AuthButton href="/signup" type="primary">
-                      SignUp
-                    </AuthButton>
-                  </Link>
-                </>
-              )}
-
-            </AuthSection>
-
             <HamburgerMenuContainer onClick={handleMenuClick}>
               <Bar open={open} />
               <Bar open={open} />
@@ -254,7 +252,8 @@ export default function Header() {
               </Navigation>}
 
           </MenuContainer>
-
+        
+        </HeaderResponsiveMenu>
         </HeaderContainer>
     )
 }
