@@ -43,6 +43,9 @@ const LogoContainer = styled.div`
 const BrandLogo = styled.img`
     width: 200px;
     height: 200px;
+    &:hover {
+      transform: scale(1.1);
+    }
     @media(max-width: 768px) {
         width: 170px;
         height: 170px;

@@ -32,7 +32,7 @@ const StyledGlobalStyle = createGlobalStyle`
     }
 
     h3 {
-        font-size: 32px;
+        font-size: 24px;
         @media(max-width: 768px) {
             font-size: 24px;
         }
@@ -40,7 +40,7 @@ const StyledGlobalStyle = createGlobalStyle`
 
     p {
         font-family: 'Roboto', sans-serif;
-        font-size: 24px;
+        font-size: 18px;
         @media(max-width: 768px) {
             font-size: 16px;
         }

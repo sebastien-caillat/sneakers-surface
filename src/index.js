@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Profile from './pages/Profile';
+import Products from './pages/Products';
 import Error from './components/Error';
 
 import GlobalStyle from './utils/GlobalStyle';
@@ -25,7 +26,8 @@ root.render(
                     <Route path='/signup' element={<Signup />} />
                     <Route path='/signin' element={<Signin />} />
                     <Route path='/profile/:username' element={getToken() ? <Profile /> : <Navigate to='/signin' />} />
-                    <Route path='products' element=""></Route>
+                    <Route path='products' element={<Products />}></Route>
+                    <Route path='product/:id' element=""></Route>
                     <Route path='*' element={<Error />}></Route>
                 </Routes>
             </Router>
