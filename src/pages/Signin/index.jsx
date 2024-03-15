@@ -13,7 +13,7 @@ import {
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext";
+import { useAuthContext } from "../../components/context/AuthContext";
 import { API } from "../../constant";
 import { setToken } from "../../helpers";
 import styled from "styled-components";

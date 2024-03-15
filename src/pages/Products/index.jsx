@@ -17,13 +17,16 @@ const ProductContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 5%;
+  @media(max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  min-height: 450px;
+  min-height: 400px;
   background-color: ${colors.backgroundalt};
   border-radius: 15px;
   overflow: auto;
@@ -31,6 +34,14 @@ const ProductCard = styled.div`
   &:hover {
     cursor: pointer;
     transform: scale(1.1);
+  }
+  @media(max-width: 1024px) {
+    width: 400px;
+    min-height: 350px;
+    margin: 25px;
+  }
+  @media(max-width: 768px) {
+    width: 300px;
   }
 `
 
@@ -82,8 +93,8 @@ export default function Products() {
   
   <div>
     <TitleContainer>
-    <h1>Products</h1>
-      <h2>Populaires</h2>
+    <h1>Produits en vente</h1>
+      <h2>Les nouveautés</h2>
     </TitleContainer>
     <ProductContainer>
       {products.map(product => (
@@ -91,7 +102,6 @@ export default function Products() {
           <ProductCardImg src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt={product.attributes.title} />
           <ProductCardInfos>
             <h3>{product.attributes.title}</h3>
-            <p>{product.attributes.description}</p>
             <p>Prix: {product.attributes.price} €</p>
             <p>En stock: {product.attributes.inStock ? <Yes>Oui</Yes> : <No>Non</No>}</p>
             <p>Vendeur: {product.attributes.creator}</p>

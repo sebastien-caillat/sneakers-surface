@@ -33,8 +33,10 @@ const StyledGlobalStyle = createGlobalStyle`
 
     h3 {
         font-size: 24px;
-        @media(max-width: 768px) {
-            font-size: 24px;
+        @media(max-width: 1024px) {
+            font-size: 20px;
+            line-height: 1.4;
+            margin-right: 1%;
         }
     }
 

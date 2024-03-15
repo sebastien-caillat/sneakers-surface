@@ -4,7 +4,7 @@ import colors from "../../utils/colors";
 
 import { useParams, Navigate } from "react-router-dom";
 import { Button, Card, Col, Form, Input, message, Row, Spin } from "antd";
-import { useAuthContext} from "../../context/AuthContext";
+import { useAuthContext} from "../../components/context/AuthContext";
 import { API } from "../../constant";
 import { getToken } from "../../helpers";
 
@@ -87,8 +87,8 @@ export default function Profile() {
                  initialValues={{
                         username: user?.username,
                         email: user?.email,
-                        firstName: user?.firstName,
-                        lastName: user?.lastName,
+                        firstName: user?.firstname,
+                        lastName: user?.lastname,
                  }}
                  onFinish={handleProfileUpdate}
             >
@@ -128,7 +128,7 @@ export default function Profile() {
                     <Col span={24}>
                         <StyledFormItem
                             label="First Name"
-                            name="firstName"
+                            name="firstname"
                             rules={[
                                 {
                                     message: "First Name is required !",
@@ -143,7 +143,7 @@ export default function Profile() {
                     <Col span={24}>
                         <StyledFormItem
                             label="Last Name"
-                            name="lastName"
+                            name="lastname"
                             rules={[
                                 {
                                     message: "Last Name is required !",

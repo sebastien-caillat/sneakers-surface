@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { AuthContext } from "../../context/AuthContext"
+import { AuthContext } from "../context/AuthContext"
 import { message } from "antd"
 import { API, BEARER } from "../../constant"
 import { useEffect } from "react"
