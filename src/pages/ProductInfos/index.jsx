@@ -9,7 +9,7 @@ const ProductCardContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5%;
+    margin-bottom: 3%;
     @media(max-width: 768px) {
         margin: 10% 0;
     }

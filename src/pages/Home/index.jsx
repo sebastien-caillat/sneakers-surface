@@ -64,6 +64,15 @@ const JoinUsText = styled.p`
     }
 `
 
+const CreatorSignature = styled.div`
+    display: flex;
+    width: 100%;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+`
+
 
 export default function Home() {
 
@@ -87,6 +96,10 @@ export default function Home() {
                 <JoinUsText>Rejoignez notre communauté et découvrez des milliers de modèles disponibles</JoinUsText>
                 <StyledButton onClick={() => handleClick('/signup')}>S'inscrire</StyledButton>
             </JoinOurCommunitySection>
+
+            <CreatorSignature>
+                <p>© 2024 - Created by Sébastien Caillat</p>
+            </CreatorSignature>
 
         </GlobalContainer>
     )
