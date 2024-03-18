@@ -9,6 +9,7 @@ import Signin from './pages/Signin';
 import Profile from './pages/Profile';
 import Products from './pages/Products';
 import ProductInfos from './pages/ProductInfos';
+import Cart from './pages/Cart';
 import Error from './components/Error';
 
 import GlobalStyle from './utils/GlobalStyle';
@@ -29,6 +30,7 @@ root.render(
                     <Route path='/profile/:username' element={getToken() ? <Profile /> : <Navigate to='/signin' />} />
                     <Route path='products' element={<Products />}></Route>
                     <Route path='product/:id' element={<ProductInfos />}></Route>
+                    <Route path='cart' element={<Cart />}></Route>
                     <Route path='*' element={<Error />}></Route>
                 </Routes>
             </Router>

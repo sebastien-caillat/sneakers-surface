@@ -40,7 +40,7 @@ const StyledGlobalStyle = createGlobalStyle`
         }
     }
 
-    p {
+    p, label {
         font-family: 'Roboto', sans-serif;
         font-size: 18px;
         @media(max-width: 768px) {

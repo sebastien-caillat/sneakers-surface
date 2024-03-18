@@ -7,6 +7,8 @@ import { StyledLink } from "../../utils/Atoms";
 
 import colors from "../../utils/colors";
 import sneakerslogo from "../../assets/sneakersurface.svg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const HeaderContainer = styled.div`
     display: flex;
@@ -59,6 +61,9 @@ const AuthSection = styled.div`
     align-items: center;
     justify-content: center;
     margin-right: 5%;
+    @media(max-width: 768px) {
+      margin: 0 0 0 10%;
+    }
 `
 
 const AuthButton = styled.button`
@@ -69,6 +74,9 @@ const AuthButton = styled.button`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    @media(max-width: 768px) {
+      margin: 0 10px 0 10px;
+    }
 `
 
 // Styled components of the hamburger menu and its items
@@ -126,6 +134,20 @@ const Bar = styled.div`
     }
   `}
 `
+
+const CartIcon = styled(FontAwesomeIcon)`
+  width: 30px;
+  height: 40px;
+  margin-right: 30px;
+  cursor: pointer;
+  margin-bottom: -10px;
+  &:hover {
+    transform: scale(1.1);
+  }
+  @media(max-width: 768px) {
+    margin: 0px 20px -10px 10px;
+  }
+`;
 
 // Styled component of the navigation menu that is displayed when the hamburger icon is clicked
 
@@ -240,6 +262,9 @@ export default function Header() {
           </AuthSection>
 
           <MenuContainer>
+
+            <CartIcon icon={faShoppingCart} onClick={() => navigate("/cart")} />
+
             <HamburgerMenuContainer onClick={handleMenuClick}>
               <Bar open={open} />
               <Bar open={open} />
