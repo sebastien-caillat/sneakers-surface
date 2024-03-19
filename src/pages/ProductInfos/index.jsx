@@ -90,6 +90,34 @@ export default function ProductInfos() {
         return <div>Loading...</div>;
     }
 
+    const handleSubmit = () => {
+
+        if (!product.attributes.inStock) {
+            alert("Ce produit est indisponible actuellement");
+            return;
+          }
+
+        let storedProducts = JSON.parse(localStorage.getItem('products')) || [];
+
+        const existingProductIndex = storedProducts.findIndex(
+            (storedProduct) => storedProduct.id === product.id
+        )
+
+        if(existingProductIndex !== -1) {
+            storedProducts[existingProductIndex].quantity += quantity;
+        } else {
+            storedProducts.push({
+                id: product.id,
+                image: product.attributes.imageSmall.data.attributes.url,
+                title: product.attributes.title,
+                quantity
+            });
+        }
+
+        localStorage.setItem('products', JSON.stringify(storedProducts));
+        alert(`Vous avez ajouté ${quantity} ${product.attributes.title} au panier`)
+    }
+
     return(
         <ProductCardContainer>
             <ProductCard>
@@ -106,11 +134,11 @@ export default function ProductInfos() {
                         min="1"
                         max="10"
                         value={quantity}
-                        onChange={(e) => setQuantity(e.target.value)}
+                        onChange={(e) => setQuantity(Number(e.target.value))}
                     />
                 </label>
             </ProductCard>
-            <SubmitButton onClick={() => alert(`Vous avez ajouté ${quantity} ${product.attributes.title} au panier`)}>Ajouter au panier</SubmitButton>
+            <SubmitButton onClick={handleSubmit}>Ajouter au panier</SubmitButton>
         </ProductCardContainer>
     );
 }
