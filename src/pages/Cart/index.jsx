@@ -28,8 +28,27 @@ const ProductImage = styled.img`
   object-fit: contain;
 `
 
-const ImageColumn = styled.div`
+const ProductCategory = styled.div`
   width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const DeleteButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  background-color: red;
+`
+
+const TotalPrice = styled.div`
+  text-align: right;
+  margin: 40px 0;
+  font-size: 24px;
 `
 
 export default function Cart() {
@@ -54,6 +73,10 @@ export default function Cart() {
     setProductData(productData.filter((product) => product.id !== id));
   };
 
+  const totalPriceGlobal = productData.reduce((sum, product, index) => {
+    return sum + product.attributes.price * cart[index].quantity;
+  }, 0);
+
   return (
     <div>
       <CartTitle>Mon panier</CartTitle>
@@ -62,12 +85,12 @@ export default function Cart() {
       ) : (
         <ProductList>
           <Product>
-            <ImageColumn></ImageColumn> {/* Empty div for image column */}
-            <div>Produit</div>
-            <div>Quantité</div>
-            <div>Prix unitaire</div>
-            <div>Prix Total</div>
-            <div>Supprimer</div>
+            <ProductCategory></ProductCategory> {/* Empty div for image column */}
+            <ProductCategory>Produit</ProductCategory>
+            <ProductCategory>Quantité</ProductCategory>
+            <ProductCategory>Prix unitaire</ProductCategory>
+            <ProductCategory>Prix Total</ProductCategory>
+            <ProductCategory>Supprimer</ProductCategory>
           </Product>
 
           {productData.map((product, index) => {
@@ -76,18 +99,19 @@ export default function Cart() {
             return (
               <Product key={product.id}>
                 <ProductImage src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt={cart[index].title} />
-                <div>{cart[index].title}</div>
-                <div>{cart[index].quantity}</div>
-                <div>{product.attributes.price} €</div>
-                <div>{totalPrice} €</div>
-                <div>
-                  <button onClick={() => handleDelete(product.id)}>
+                <ProductCategory>{cart[index].title}</ProductCategory>
+                <ProductCategory>{cart[index].quantity}</ProductCategory>
+                <ProductCategory>{product.attributes.price} €</ProductCategory>
+                <ProductCategory>{totalPrice} €</ProductCategory>
+                <ProductCategory>
+                  <DeleteButton onClick={() => handleDelete(product.id)}>
                     <FaTimes />
-                  </button>
-                </div>
+                  </DeleteButton>
+                </ProductCategory>
               </Product>
             );
           })}
+          <TotalPrice>Total: {totalPriceGlobal} €</TotalPrice>
         </ProductList>
       )}
     </div>
