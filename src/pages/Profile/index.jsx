@@ -8,6 +8,14 @@ import { useAuthContext} from "../../components/context/AuthContext";
 import { API } from "../../constant";
 import { getToken } from "../../helpers";
 
+const GlobalContainer = styled.div`
+    display: flex;
+    width: 90%;
+    margin: auto;
+    justify-content: center;
+    margin-top: 5%;
+`
+
 const StyledCard = styled(Card)`
     display: flex;
     justify-content: center;
@@ -81,6 +89,8 @@ export default function Profile() {
     }
 
     return(
+
+    <GlobalContainer>
         <StyledCard className="profile_page_card">
             <StyledForm
                  layout="vertical"
@@ -171,5 +181,6 @@ export default function Profile() {
                 </StyledButton>
             </StyledForm>
         </StyledCard>
+    </GlobalContainer>
     );
 };

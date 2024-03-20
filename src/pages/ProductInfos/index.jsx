@@ -6,12 +6,13 @@ import colors from "../../utils/colors";
 
 const ProductCardContainer = styled.div`
     display: flex;
+    width: 90%;
+    margin: auto;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 3%;
     @media(max-width: 768px) {
-        margin: 10% 0;
+        margin-top: 7%;
     }
 `
 
@@ -104,6 +105,12 @@ export default function ProductInfos() {
         )
 
         if(existingProductIndex !== -1) {
+
+            if(storedProducts[existingProductIndex].quantity + quantity > 10) {
+                alert("Vous ne pouvez pas ajouter plus de 10 exemplaires d'un même produit au panier");
+                return;
+            }
+
             storedProducts[existingProductIndex].quantity += quantity;
         } else {
             storedProducts.push({
@@ -134,7 +141,12 @@ export default function ProductInfos() {
                         min="1"
                         max="10"
                         value={quantity}
-                        onChange={(e) => setQuantity(Number(e.target.value))}
+                        onChange={(e) => {
+                            let value = Number(e.target.value);
+                            if (value < 1) value = 1;
+                            if (value > 10) value = 10;
+                            setQuantity(value);
+                          }}
                     />
                 </label>
             </ProductCard>

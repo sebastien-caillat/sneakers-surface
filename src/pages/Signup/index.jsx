@@ -79,6 +79,7 @@ export default function Signup() {
       });
 
       const data = await response.json();
+
       if (data?.error) {
         throw data?.error;
       } else {
@@ -88,12 +89,17 @@ export default function Signup() {
 
         message.success(`Bienvenue à bord, ${data.user.username} !`);
 
-        navigate("/profile", { replace: true });
+        navigate("/", { replace: true });
 
       }
     } catch(error) {
       console.error(error);
-      setError(error?.message ?? "Something went wrong");
+
+      if(error.message === "Email is already taken." || error.message === "Username is already taken.") {
+        setError("Cette adresse email ou ce nom d'utilisateur sont déjà utilisée")
+      } else {
+        setError(error?.message ?? "Something went wrong");
+      }
     } finally {
       setIsLoading(false);
     }

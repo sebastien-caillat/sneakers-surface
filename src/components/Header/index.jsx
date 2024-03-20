@@ -12,10 +12,10 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const HeaderContainer = styled.div`
     display: flex;
-    width: 100%;
+    width: 90%;
+    margin: auto;
     align-items: center;
     justify-content: center;
-
     @media(max-width: 768px) {
       flex-direction: column;
     }
@@ -25,7 +25,6 @@ const HeaderResponsiveMenu = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 5%;
 `
 
 
@@ -34,11 +33,14 @@ const HeaderResponsiveMenu = styled.div`
 const LogoContainer = styled.div`
     display: flex;
     cursor: pointer;
-    margin-left: 2.5%;
     width: 100%;
+    margin-left: -3%;
+    @media(max-width: 1024px) {
+      margin-left: -6%;
+    }
     @media(max-width: 768px) {
-        margin-left: 0;
-        justify-content: center;
+      margin-left: 0;
+      justify-content: center;
     }
 `
 
@@ -62,7 +64,7 @@ const AuthSection = styled.div`
     justify-content: center;
     margin-right: 5%;
     @media(max-width: 768px) {
-      margin: 0 0 0 10%;
+      margin: 0 0 0 3%;
     }
 `
 
@@ -85,7 +87,6 @@ const MenuContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-right: 5%;
     z-index: 2;
     width: 100%;
 `;

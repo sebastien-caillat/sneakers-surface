@@ -13,7 +13,8 @@ const TitleContainer = styled.div`
 
 const ProductContainer = styled.div`
   display: flex;
-  width: 100%;
+  width: 90%;
+  margin: auto;
   justify-content: center;
   align-items: center;
   margin-bottom: 5%;
@@ -53,7 +54,7 @@ const ProductCardImg = styled.img`
 `
 
 const ProductCardInfos = styled.div`
-  padding-left: 15px;
+  padding: 0 15px;
   line-height: 0.8;
 `
 

@@ -4,17 +4,17 @@ import styled from 'styled-components';
 import colors from '../../utils/colors';
 
 const GlobalContainer = styled.div`
-    width: 100%;
+    width: 90%;
+    margin: auto;
 `
 
 const TitleContainer = styled.div`
     margin-top: -2%;
-    margin-left: 5%;
     @media(max-width: 1024px) {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 0px 25px 0px 25px;
+        margin-top: 0;
     }
 `
 
@@ -48,6 +48,7 @@ const JoinOurCommunitySection = styled.div`
     margin: 50px 0 50px 0;
     padding-bottom: 60px;
     background-color: ${colors.backgroundalt};
+    border-radius: 15px;
     @media(max-width: 768px) {
         padding-bottom: 30px;
     }
@@ -71,6 +72,8 @@ const CreatorSignature = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 2%;
+    @media(max-width: 768px) {
+        margin-top: 0;
 `
 
 

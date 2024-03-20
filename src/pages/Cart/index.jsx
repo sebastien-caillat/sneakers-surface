@@ -26,6 +26,10 @@ const ProductImage = styled.img`
   width: 200px;
   height: 200px;
   object-fit: contain;
+  @media(max-width: 1024px) {
+    width: 120px;
+    height: 120px;
+  }
 `
 
 const ProductCategory = styled.div`
@@ -33,6 +37,15 @@ const ProductCategory = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  @media(max-width: 1024px) {
+    width: 120px;
+    margin-left: 10px;
+  }
+`
+
+const QuantityInput = styled.input`
+  width: 40px;
 `
 
 const DeleteButton = styled.button`
@@ -56,6 +69,8 @@ export default function Cart() {
   const [productData, setProductData] = useState([]);
   const cart = useMemo(() => JSON.parse(localStorage.getItem('products')) || [], []);
 
+  // Retrieve the products data from the Strapi API 
+
   useEffect(() => {
     Promise.all(
       cart.map((product) =>
@@ -67,11 +82,33 @@ export default function Cart() {
     });
   }, [cart]);
 
+  // Remove product from local storage and state when user clicks on delete button
+
   const handleDelete = (id) => {
     const updatedCart = cart.filter((product) => product.id !== id);
     localStorage.setItem("products", JSON.stringify(updatedCart));
     setProductData(productData.filter((product) => product.id !== id));
   };
+
+  // Update quantity in local storage and state when user changes the input value
+
+  const handleQuantityChange = (e, id) => {
+
+    let quantity = Number(e.target.value);
+    if (quantity < 1) quantity = 1;
+    if (quantity > 10) quantity = 10;
+
+    const updatedCart = cart.map((product) => {
+      if (product.id === id) {
+        return { ...product, quantity: quantity };
+      }
+      return product;
+    });
+    localStorage.setItem('products', JSON.stringify(updatedCart));
+    window.location.reload();
+  };
+
+  // Calculate the total price of the cart
 
   const totalPriceGlobal = productData.reduce((sum, product, index) => {
     return sum + product.attributes.price * cart[index].quantity;
@@ -84,6 +121,7 @@ export default function Cart() {
         <p>Votre panier est vide</p>
       ) : (
         <ProductList>
+
           <Product>
             <ProductCategory></ProductCategory> {/* Empty div for image column */}
             <ProductCategory>Produit</ProductCategory>
@@ -100,7 +138,15 @@ export default function Cart() {
               <Product key={product.id}>
                 <ProductImage src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt={cart[index].title} />
                 <ProductCategory>{cart[index].title}</ProductCategory>
-                <ProductCategory>{cart[index].quantity}</ProductCategory>
+                <ProductCategory>
+                  <QuantityInput 
+                    type="number" 
+                    min="1" 
+                    max="10" 
+                    value={cart[index].quantity} 
+                    onChange={(e) => handleQuantityChange(e, product.id)} 
+                  />
+                </ProductCategory>
                 <ProductCategory>{product.attributes.price} €</ProductCategory>
                 <ProductCategory>{totalPrice} €</ProductCategory>
                 <ProductCategory>
