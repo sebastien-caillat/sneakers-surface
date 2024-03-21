@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -30,6 +31,10 @@ const ProductImage = styled.img`
     width: 120px;
     height: 120px;
   }
+  @media(max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
 `
 
 const ProductCategory = styled.div`
@@ -42,10 +47,17 @@ const ProductCategory = styled.div`
     width: 120px;
     margin-left: 10px;
   }
+  @media(max-width: 768px) {
+    width: 80px;
+    margin-left: 5px;
+  }
 `
 
 const QuantityInput = styled.input`
   width: 40px;
+  @media(max-width: 768px) {
+    width: 30px;
+  }
 `
 
 const DeleteButton = styled.button`
@@ -56,17 +68,35 @@ const DeleteButton = styled.button`
   height: 40px;
   border-radius: 50px;
   background-color: red;
+  @media(max-width: 768px) {
+    width: 20px;
+    height: 20px;
+  }
 `
 
 const TotalPrice = styled.div`
   text-align: right;
   margin: 40px 0;
   font-size: 24px;
+  @media(max-width: 768px) {
+    text-align: center;
+  }
+`
+
+const ConfirmationButtonContainer = styled.div`
+  text-align: center;
+  margin-bottom: 3%;
+`
+
+const ConfirmationButton = styled.button`
+  width: 160px;
 `
 
 export default function Cart() {
 
   const [productData, setProductData] = useState([]);
+  const [orderId, setOrderId] = useState(null);
+  const navigate = useNavigate();
   const cart = useMemo(() => JSON.parse(localStorage.getItem('products')) || [], []);
 
   // Retrieve the products data from the Strapi API 
@@ -114,6 +144,20 @@ export default function Cart() {
     return sum + product.attributes.price * cart[index].quantity;
   }, 0);
 
+  const handlePurchase = () => {
+
+    // Generate a random order ID.
+
+    const newOrderId = Math.floor(Math.random() * 1000000000000);
+    setOrderId(newOrderId);
+    console.log(orderId);
+
+    // Redirect to the confirmation page with the order ID as a state parameter
+
+    navigate('/confirmation', { state: { orderId: newOrderId } });
+
+  };
+
   return (
     <div>
       <CartTitle>Mon panier</CartTitle>
@@ -123,12 +167,12 @@ export default function Cart() {
         <ProductList>
 
           <Product>
-            <ProductCategory></ProductCategory> {/* Empty div for image column */}
-            <ProductCategory>Produit</ProductCategory>
-            <ProductCategory>Quantité</ProductCategory>
-            <ProductCategory>Prix unitaire</ProductCategory>
-            <ProductCategory>Prix Total</ProductCategory>
-            <ProductCategory>Supprimer</ProductCategory>
+              <ProductCategory></ProductCategory> {/* Empty div for image column */}
+              <ProductCategory>Produit</ProductCategory>
+              <ProductCategory>Quantité</ProductCategory>
+              <ProductCategory>Prix unitaire</ProductCategory>
+              <ProductCategory>Prix Total</ProductCategory>
+              <ProductCategory>Supprimer</ProductCategory>
           </Product>
 
           {productData.map((product, index) => {
@@ -158,6 +202,9 @@ export default function Cart() {
             );
           })}
           <TotalPrice>Total: {totalPriceGlobal} €</TotalPrice>
+          <ConfirmationButtonContainer>
+            <ConfirmationButton onClick={handlePurchase}>Valider</ConfirmationButton>
+          </ConfirmationButtonContainer>
         </ProductList>
       )}
     </div>

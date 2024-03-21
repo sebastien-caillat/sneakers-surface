@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import Products from './pages/Products';
 import ProductInfos from './pages/ProductInfos';
 import Cart from './pages/Cart';
+import Confirmation from './pages/Confirmation';
 import Error from './components/Error';
 
 import GlobalStyle from './utils/GlobalStyle';
@@ -28,9 +29,10 @@ root.render(
                     <Route path='/signup' element={<Signup />} />
                     <Route path='/signin' element={<Signin />} />
                     <Route path='/profile/:username' element={getToken() ? <Profile /> : <Navigate to='/signin' />} />
-                    <Route path='products' element={<Products />}></Route>
-                    <Route path='product/:id' element={<ProductInfos />}></Route>
-                    <Route path='cart' element={<Cart />}></Route>
+                    <Route path='/products' element={<Products />}></Route>
+                    <Route path='/product/:id' element={<ProductInfos />}></Route>
+                    <Route path='/cart' element={<Cart />}></Route>
+                    <Route path='/confirmation' element={<Confirmation />}></Route>
                     <Route path='*' element={<Error />}></Route>
                 </Routes>
             </Router>
