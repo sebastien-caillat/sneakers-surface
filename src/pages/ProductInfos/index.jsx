@@ -63,19 +63,32 @@ const QuantityInput = styled.input`
   border-radius: 15px; 
 `;
 
+const DeleteButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 35px;
+`
+
 const SubmitButton = styled.button`
   display: flex;
   width: 225px;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  margin-top: 50px;
+  margin: 50px 0;
+  border-radius: 35px;
 `
 
 export default function ProductInfos() {
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const [user, setUser] = useState(null);
     const { id } = useParams();
+
+    // Fetch the product from the API
 
     useEffect(() => {
         axios.get(`http://localhost:1337/api/products/${id}?populate=*`)
@@ -86,10 +99,52 @@ export default function ProductInfos() {
                 console.error('There was an error!', error);
             });
         }, [id]);
+
+    // Fetch the authentified user data from the API
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const authToken = localStorage.getItem('authToken');
+        
+            try {
+            const response = await axios.get('http://localhost:1337/api/users/me', {
+                headers: {
+                Authorization: `Bearer ${authToken}`,
+                },
+            });
+        
+            const user = response.data;
+            setUser(user);
+
+            // console.log(user);
+
+            } catch (error) {
+            console.error('There was an error!', error);
+            }
+        };
+        
+        fetchUser();
+        }, []);
+
+    // Delete the product on the API
+
+    const handleDelete = () => {
+        if (window.confirm('Are you sure you want to delete this product?')) {
+            axios.delete(`http://localhost:1337/api/products/${id}`)
+            .then(response => {
+                // Handle successful delete
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+        }
+    };
     
     if (!product) {
         return <div>Loading...</div>;
     }
+
+    // Add the product to the cart
 
     const handleSubmit = () => {
 
@@ -149,6 +204,9 @@ export default function ProductInfos() {
                           }}
                     />
                 </label>
+                {user && user.username === product.attributes.creator && (
+                    <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+                )}
             </ProductCard>
             <SubmitButton onClick={handleSubmit}>Ajouter au panier</SubmitButton>
         </ProductCardContainer>
