@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import colors from "../../utils/colors";
 
@@ -63,13 +63,19 @@ const QuantityInput = styled.input`
   border-radius: 15px; 
 `;
 
-const DeleteButton = styled.button`
+const ProductModificationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 -20px 0;
+`
+
+const ActionButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  padding: 20px;
+  min-width: 150px;
   border-radius: 35px;
+  margin-bottom: 20px;
 `
 
 const SubmitButton = styled.button`
@@ -87,6 +93,8 @@ export default function ProductInfos() {
     const [quantity, setQuantity] = useState(1);
     const [user, setUser] = useState(null);
     const { id } = useParams();
+
+    const navigate = useNavigate();
 
     // Fetch the product from the API
 
@@ -129,7 +137,7 @@ export default function ProductInfos() {
     // Delete the product on the API
 
     const handleDelete = () => {
-        if (window.confirm('Are you sure you want to delete this product?')) {
+        if (window.confirm('Voulez-vous vraiment supprimer ce produit ?')) {
             axios.delete(`http://localhost:1337/api/products/${id}`)
             .then(response => {
                 // Handle successful delete
@@ -143,6 +151,12 @@ export default function ProductInfos() {
     if (!product) {
         return <div>Loading...</div>;
     }
+
+    // Modify the product on the API
+
+    const handleModify = () => {
+        navigate(`/product-editor/${id}`);
+    };
 
     // Add the product to the cart
 
@@ -205,7 +219,10 @@ export default function ProductInfos() {
                     />
                 </label>
                 {user && user.username === product.attributes.creator && (
-                    <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+                    <ProductModificationContainer>               
+                        <ActionButton onClick={handleModify}>Modifier</ActionButton>
+                        <ActionButton onClick={handleDelete}>Supprimer</ActionButton>
+                    </ProductModificationContainer>
                 )}
             </ProductCard>
             <SubmitButton onClick={handleSubmit}>Ajouter au panier</SubmitButton>
