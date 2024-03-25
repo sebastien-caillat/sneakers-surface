@@ -15,7 +15,40 @@ const ProductEditorContainer = styled.div`
 const ProductEditorForm = styled.form`
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
+`
+
+const FormItem = styled.div`
+    margin-bottom: 15px;
+`
+
+const ImageFormItem = styled(FormItem)`
+    display: flex;
+    flex-direction: column;
+`;
+
+const InputItem = styled.input`
+    border-radius: 8px;
+    min-width: 240px;
+    height: 26px;
+`
+
+const DescriptionArea = styled.textarea`
+    border-radius: 8px;
+    min-width: 240px;
+    height: 100px;
+`
+
+const ProductImage = styled.img`
+    width: 250px;
+    height: 250px;
+    object-fit: fill;
+    margin: 10px 0;
+`
+
+const SubmitButton = styled.button`
+    min-width: 150px;
+    margin: 28px 0;
 `
 
 export default function ProductEditor() {
@@ -66,6 +99,18 @@ export default function ProductEditor() {
         }
     };
 
+    const handleImageChange = (e) => {
+        if (e.target.files[0]) {
+          setProduct(prevProduct => ({
+            ...prevProduct,
+            attributes: {
+              ...prevProduct.attributes,
+              [e.target.name]: { data: { attributes: { url: URL.createObjectURL(e.target.files[0]) } } }
+            }
+          }));
+        }
+    };
+
     const handleSubmit = (e) => {
 
         e.preventDefault();
@@ -102,40 +147,60 @@ export default function ProductEditor() {
         }
     }
 
-
     return (
         <ProductEditorContainer>
             <h1>{id ? "Modifier le produit" : "Créer un produit"}</h1>
             <ProductEditorForm onSubmit={handleSubmit}>
-            <div>
+            <FormItem>
                 <label>Nom du produit :</label>
-                <input type="text" name="title" value={product.attributes.title} onChange={handleChange} />
-            </div>
-            <div>
+            </FormItem>
+            <FormItem>
+                <InputItem type="text" name="title" value={product.attributes.title} onChange={handleChange} />
+            </FormItem>
+            
+            <FormItem>
                 <label>Prix :</label>
-                <input type="number" name="price" value={product.attributes.price} onChange={handleChange} />
-            </div>
-            <div>
+            </FormItem>
+            <FormItem>
+                <InputItem type="number" name="price" value={product.attributes.price} onChange={handleChange} />
+            </FormItem>
+
+            <FormItem>
                 <label>Description :</label>
-                <textarea name="description" value={product.attributes.description} onChange={handleChange} />
-            </div>
-            <div>
+            </FormItem>
+            <FormItem>
+                <DescriptionArea name="description" value={product.attributes.description} onChange={handleChange} />
+            </FormItem>
+
+            <FormItem>
                 <label>En stock :</label>
                 <input type="checkbox" name="inStock" checked={product.attributes.inStock} onChange={handleChange} />
-            </div>
-            <div>
+            </FormItem>
+
+            <FormItem>
                 <label>Créateur :</label>
-                <input type="text" name="creator" value={product.attributes.creator} readOnly />
-            </div>
-            <div>
+            </FormItem>
+            <FormItem>
+                <InputItem type="text" name="creator" value={product.attributes.creator} readOnly />
+            </FormItem>
+
+            <FormItem>
                 <label>Image (petite) :</label>
-                <input type="text" name="imageSmall" value={product.attributes.imageSmall.data.attributes.url} onChange={handleChange} />
-            </div>
-            <div>
+            </FormItem>
+            <ImageFormItem>
+                <ProductImage src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt="Small" />
+                <InputItem type="file" name="imageSmall" onChange={handleImageChange} />
+            </ImageFormItem>
+
+            <FormItem>
                 <label>Image (grande) :</label>
-                <input type="text" name="imageLarge" value={product.attributes.imageLarge.data.attributes.url} onChange={handleChange} />
-            </div>
-            <button type="submit">{id ? "Modifier" : "Créer"}</button>
+            </FormItem>
+            <ImageFormItem>
+                <ProductImage src={`http://localhost:1337${product.attributes.imageLarge.data.attributes.url}`} alt="Large" />
+                <InputItem type="file" name="imageLarge" onChange={handleImageChange} />
+            </ImageFormItem>
+
+            <SubmitButton type="submit">{id ? "Modifier" : "Créer"}</SubmitButton>
             </ProductEditorForm>
         </ProductEditorContainer>
     )
