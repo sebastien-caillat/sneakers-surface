@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import colors from "../../utils/colors";
 
 const ProductEditorContainer = styled.div`
     display: flex;
@@ -38,6 +39,13 @@ const DescriptionArea = styled.textarea`
     min-width: 240px;
     height: 100px;
 `
+
+const PlaceholderImage = styled.div`
+  width: 250px;
+  height: 250px;
+  background-color: ${colors.backgroundalt};
+  margin: 10px 0;
+`;
 
 const ProductImage = styled.img`
     width: 250px;
@@ -79,7 +87,12 @@ export default function ProductEditor() {
         }
     }, [id]);
 
+    // Event handlers for input changes 
+
     const handleChange = (e) => {
+
+        // If the input is for image, update the image URL
+        
         if (e.target.name === 'imageSmall' || e.target.name === 'imageLarge') {
           setProduct(prevProduct => ({
             ...prevProduct,
@@ -88,6 +101,20 @@ export default function ProductEditor() {
               [e.target.name]: { data: { attributes: { url: e.target.value } } }
             }
           }));
+
+        // If the input is for inStock, update the inStock value 
+
+        } else if (e.target.name === 'inStock') {
+          setProduct(prevProduct => ({
+            ...prevProduct,
+            attributes: {
+              ...prevProduct.attributes,
+              [e.target.name]: e.target.checked
+            }
+          }));
+
+        // If the input is for other fields, update the value directly  
+
         } else {
           setProduct(prevProduct => ({
             ...prevProduct,
@@ -99,34 +126,64 @@ export default function ProductEditor() {
         }
     };
 
+    // Event handler for image file changes
+
     const handleImageChange = (e) => {
+
+        // If a file is selected
+
         if (e.target.files[0]) {
+
+          // Update the product state
+
           setProduct(prevProduct => ({
             ...prevProduct,
             attributes: {
               ...prevProduct.attributes,
+
+              // Set the URL of the image to the object URL of the selected file
+
               [e.target.name]: { data: { attributes: { url: URL.createObjectURL(e.target.files[0]) } } }
             }
           }));
         }
     };
 
+    // Event handler for form submission
+
     const handleSubmit = (e) => {
 
         e.preventDefault();
         const authToken = localStorage.getItem('authToken');
-        console.log("Form submitted", product.attributes);
         const config = {
             headers: {
-              'Authorization': `Bearer ${authToken}`
+              'Authorization': `Bearer ${authToken}`,
+              'Content-Type': 'multipart/form-data'
             }
         }
+
+        let formData = new FormData();
+
+        // Append the necessary fields to formData
+
+        formData.append('data', JSON.stringify({
+            title: product.attributes.title,
+            price: product.attributes.price,
+            description: product.attributes.description,
+            inStock: product.attributes.inStock,
+            creator: product.attributes.creator
+        }));
+
+        // Append the images to formData
+
+        formData.append('files.imageSmall', product.attributes.imageSmall);
+        formData.append('files.imageLarge', product.attributes.imageLarge);
 
         if(id) {
 
             // Update the existing product
 
-            axios.put(`http://localhost:1337/api/products/${id}`, product.attributes, config)
+            axios.put(`http://localhost:1337/api/products/${id}`, formData, config)
                 .then(() => {
                     navigate(`/product/${id}`);
                 })
@@ -137,9 +194,9 @@ export default function ProductEditor() {
 
             // Create a new product
 
-            axios.post(`http://localhost:1337/api/products`, product.attributes, config)
-                .then(() => {
-                    navigate('/products');
+            axios.post(`http://localhost:1337/api/products`, formData, config)
+                .then(response => {
+                    navigate(`/product/${response.data.id}`);
                 })
                 .catch(error => {
                     console.error('There was an error!', error);
@@ -159,7 +216,7 @@ export default function ProductEditor() {
             </FormItem>
             
             <FormItem>
-                <label>Prix :</label>
+                <label>Prix (en €) :</label>
             </FormItem>
             <FormItem>
                 <InputItem type="number" name="price" value={product.attributes.price} onChange={handleChange} />
@@ -188,7 +245,10 @@ export default function ProductEditor() {
                 <label>Image (petite) :</label>
             </FormItem>
             <ImageFormItem>
-                <ProductImage src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt="Small" />
+                {product.attributes.imageSmall.data.attributes.url ? 
+                    <ProductImage src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt="Small" /> :
+                    <PlaceholderImage />
+                }
                 <InputItem type="file" name="imageSmall" onChange={handleImageChange} />
             </ImageFormItem>
 
@@ -196,7 +256,10 @@ export default function ProductEditor() {
                 <label>Image (grande) :</label>
             </FormItem>
             <ImageFormItem>
-                <ProductImage src={`http://localhost:1337${product.attributes.imageLarge.data.attributes.url}`} alt="Large" />
+                {product.attributes.imageLarge.data.attributes.url ? 
+                    <ProductImage src={`http://localhost:1337${product.attributes.imageLarge.data.attributes.url}`} alt="Large" /> :
+                    <PlaceholderImage />
+                }
                 <InputItem type="file" name="imageLarge" onChange={handleImageChange} />
             </ImageFormItem>
 

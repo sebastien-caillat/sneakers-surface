@@ -70,8 +70,7 @@ const AuthSection = styled.div`
 
 const AuthButton = styled.button`
     min-width: 100px;
-    height: 40px;
-    border-radius: 5px;
+    border-radius: 25px;
     margin: 0 15px 0 15px;
     white-space: nowrap;
     overflow: hidden;

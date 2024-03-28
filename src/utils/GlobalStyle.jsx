@@ -55,7 +55,8 @@ const StyledGlobalStyle = createGlobalStyle`
         background-color: ${colors.backgroundbutton};
         color: ${colors.text};
         border: none;
-        border-radius: 20px;
+        border-radius: 35px;
+        padding: 10px;
         cursor: pointer;
         @media(max-width: 768px) {
             height: 40px;

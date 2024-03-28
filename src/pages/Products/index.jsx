@@ -95,7 +95,8 @@ export default function Products() {
   <div>
     <TitleContainer>
     <h1>Produits en vente</h1>
-      <h2>Les nouveautés</h2>
+      <button onClick={() => navigate('/product-editor')}>Ajouter un produit</button>
+    <h2>Les nouveautés</h2>
     </TitleContainer>
     <ProductContainer>
       {products.map(product => (

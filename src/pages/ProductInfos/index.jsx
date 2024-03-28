@@ -74,7 +74,6 @@ const ActionButton = styled.button`
   justify-content: center;
   align-items: center;
   min-width: 150px;
-  border-radius: 35px;
   margin-bottom: 20px;
 `
 
@@ -83,9 +82,7 @@ const SubmitButton = styled.button`
   width: 225px;
   justify-content: center;
   align-items: center;
-  padding: 10px;
   margin: 50px 0;
-  border-radius: 35px;
 `
 
 export default function ProductInfos() {
