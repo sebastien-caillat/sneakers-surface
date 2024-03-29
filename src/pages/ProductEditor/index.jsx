@@ -72,8 +72,16 @@ export default function ProductEditor() {
             imageLarge: { data: { attributes: { url: "" } } }
         } 
     });
+
+    // State variables for the images files of the product
+
+    const [selectedImageSmall, setSelectedImageSmall] = useState(null);
+    const [selectedImageLarge, setSelectedImageLarge] = useState(null);
+
     const { id } = useParams();
     const navigate = useNavigate();
+
+    // Fetch the product data if a product id is provided
 
     useEffect(() => {
         if(id) {       
@@ -129,23 +137,12 @@ export default function ProductEditor() {
     // Event handler for image file changes
 
     const handleImageChange = (e) => {
-
-        // If a file is selected
-
         if (e.target.files[0]) {
-
-          // Update the product state
-
-          setProduct(prevProduct => ({
-            ...prevProduct,
-            attributes: {
-              ...prevProduct.attributes,
-
-              // Set the URL of the image to the object URL of the selected file
-
-              [e.target.name]: { data: { attributes: { url: URL.createObjectURL(e.target.files[0]) } } }
+            if (e.target.name === 'imageSmall') {
+                setSelectedImageSmall(e.target.files[0]);
+            } else if (e.target.name === 'imageLarge') {
+                setSelectedImageLarge(e.target.files[0]);
             }
-          }));
         }
     };
 
@@ -178,6 +175,15 @@ export default function ProductEditor() {
 
         formData.append('files.imageSmall', product.attributes.imageSmall);
         formData.append('files.imageLarge', product.attributes.imageLarge);
+
+        console.log(formData);
+
+        if (selectedImageSmall) {
+            formData.append('files.imageSmall', selectedImageSmall);
+        }
+        if (selectedImageLarge) {
+            formData.append('files.imageLarge', selectedImageLarge);
+        }
 
         if(id) {
 
@@ -246,7 +252,7 @@ export default function ProductEditor() {
             </FormItem>
             <ImageFormItem>
                 {product.attributes.imageSmall.data.attributes.url ? 
-                    <ProductImage src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt="Small" /> :
+                    <ProductImage src={selectedImageSmall ? URL.createObjectURL(selectedImageSmall) : `http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt="Small" /> :
                     <PlaceholderImage />
                 }
                 <InputItem type="file" name="imageSmall" onChange={handleImageChange} />
@@ -257,7 +263,7 @@ export default function ProductEditor() {
             </FormItem>
             <ImageFormItem>
                 {product.attributes.imageLarge.data.attributes.url ? 
-                    <ProductImage src={`http://localhost:1337${product.attributes.imageLarge.data.attributes.url}`} alt="Large" /> :
+                    <ProductImage src={selectedImageLarge ? URL.createObjectURL(selectedImageLarge) : `http://localhost:1337${product.attributes.imageLarge.data.attributes.url}`} alt="Large" /> :
                     <PlaceholderImage />
                 }
                 <InputItem type="file" name="imageLarge" onChange={handleImageChange} />
