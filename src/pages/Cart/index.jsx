@@ -145,17 +145,26 @@ export default function Cart() {
   }, 0);
 
   const handlePurchase = () => {
+    
+    const authToken = localStorage.getItem('authToken');
 
-    // Generate a random order ID.
+    if(!authToken) {
 
-    const newOrderId = Math.floor(Math.random() * 1000000000000);
-    setOrderId(newOrderId);
-    console.log(orderId);
+      navigate('/signin');
 
-    // Redirect to the confirmation page with the order ID as a state parameter
+    } else {
 
-    navigate('/confirmation', { state: { orderId: newOrderId } });
+      // Generate a random order ID.
 
+      const newOrderId = Math.floor(Math.random() * 1000000000000);
+      setOrderId(newOrderId);
+      console.log(orderId);
+
+      // Redirect to the confirmation page with the order ID as a state parameter
+
+      navigate('/confirmation', { state: { orderId: newOrderId } });
+
+    }
   };
 
   return (
