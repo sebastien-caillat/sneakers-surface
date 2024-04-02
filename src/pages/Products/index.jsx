@@ -4,6 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import colors from "../../utils/colors";
 
+import { API_BASE_URL } from "../../apiConfig";
+
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -79,7 +81,7 @@ export default function Products() {
     // Fetch products from the Strapi API
 
     useEffect(() => {
-      axios.get('http://localhost:1337/api/products?populate=*')
+      axios.get(`${API_BASE_URL}/api/products?populate=*`)
         .then(response => {
           setProducts(response.data.data);
         })
@@ -101,7 +103,7 @@ export default function Products() {
     <ProductContainer>
       {products.map(product => (
         <ProductCard key={product.id} onClick={() => handleClick(`/product/${product.id}`)}>
-          <ProductCardImg src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt={product.attributes.title} />
+          <ProductCardImg src={`${API_BASE_URL}${product.attributes.imageSmall.data.attributes.url}`} alt={product.attributes.title} />
           <ProductCardInfos>
             <h3>{product.attributes.title}</h3>
             <p>Prix: {product.attributes.price} €</p>

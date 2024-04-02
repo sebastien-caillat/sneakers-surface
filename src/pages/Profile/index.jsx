@@ -5,7 +5,7 @@ import colors from "../../utils/colors";
 import { useParams, Navigate } from "react-router-dom";
 import { Button, Card, Col, Form, Input, message, Row, Spin } from "antd";
 import { useAuthContext} from "../../components/context/AuthContext";
-import { API } from "../../constant";
+import { API_BASE_URL } from "../../apiConfig";
 import { getToken } from "../../helpers";
 
 const GlobalContainer = styled.div`
@@ -60,7 +60,7 @@ export default function Profile() {
         setLoading(true);
         
         try {
-            const response = await fetch(`${API}/users/${user.id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/users/${user.id}`, {
                 method: "PUT", 
                 headers: {
                     "Content-Type": "application/json",

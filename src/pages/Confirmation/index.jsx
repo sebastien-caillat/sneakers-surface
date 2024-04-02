@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
+import { API_BASE_URL } from "../../apiConfig";
+
 const ConfirmationContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -26,7 +28,7 @@ export default function Confirmation() {
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
-    axios.get('http://localhost:1337/api/users/me', {
+    axios.get(`${API_BASE_URL}/api/users/me`, {
       headers: {
         'Authorization': `Bearer ${authToken}`
       }

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
+import { API_BASE_URL } from "../../apiConfig";
+
 import { FaTimes } from "react-icons/fa";
 
 const CartTitle = styled.h1`
@@ -104,7 +106,7 @@ export default function Cart() {
   useEffect(() => {
     Promise.all(
       cart.map((product) =>
-        axios.get(`http://localhost:1337/api/products/${product.id}?populate=*`)
+        axios.get(`${API_BASE_URL}/api/products/${product.id}?populate=*`)
       )
     ).then((responses) => {
       const data = responses.map((response) => response.data.data);
@@ -189,7 +191,7 @@ export default function Cart() {
 
             return (
               <Product key={product.id}>
-                <ProductImage src={`http://localhost:1337${product.attributes.imageSmall.data.attributes.url}`} alt={cart[index].title} />
+                <ProductImage src={`${API_BASE_URL}${product.attributes.imageSmall.data.attributes.url}`} alt={cart[index].title} />
                 <ProductCategory>{cart[index].title}</ProductCategory>
                 <ProductCategory>
                   <QuantityInput 

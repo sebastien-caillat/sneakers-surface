@@ -4,6 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import colors from "../../utils/colors";
 
+import { API_BASE_URL } from "../../apiConfig";
+
 const ProductCardContainer = styled.div`
     display: flex;
     width: 90%;
@@ -96,7 +98,7 @@ export default function ProductInfos() {
     // Fetch the product from the API
 
     useEffect(() => {
-        axios.get(`http://localhost:1337/api/products/${id}?populate=*`)
+        axios.get(`${API_BASE_URL}/api/products/${id}?populate=*`)
             .then(response => {
                 setProduct(response.data.data);
             })
@@ -112,7 +114,7 @@ export default function ProductInfos() {
             const authToken = localStorage.getItem('authToken');
         
             try {
-            const response = await axios.get('http://localhost:1337/api/users/me', {
+            const response = await axios.get(`${API_BASE_URL}/api/users/me`, {
                 headers: {
                 Authorization: `Bearer ${authToken}`,
                 },
@@ -135,7 +137,7 @@ export default function ProductInfos() {
 
     const handleDelete = () => {
         if (window.confirm('Voulez-vous vraiment supprimer ce produit ?')) {
-            axios.delete(`http://localhost:1337/api/products/${id}`)
+            axios.delete(`${API_BASE_URL}/api/products/${id}`)
             .then(response => {
                 // Handle successful delete
             })
@@ -195,7 +197,7 @@ export default function ProductInfos() {
         <ProductCardContainer>
             <ProductCard>
                 <ProductCardTitle>{product.attributes.title}</ProductCardTitle>
-                <ProductCardImg src={`http://localhost:1337${window.innerWidth <= 768 ? product.attributes.imageSmall.data.attributes.url : product.attributes.imageLarge.data.attributes.url}`} alt={product.attributes.title} />
+                <ProductCardImg src={`${API_BASE_URL}${window.innerWidth <= 768 ? product.attributes.imageSmall.data.attributes.url : product.attributes.imageLarge.data.attributes.url}`} alt={product.attributes.title} />
                 <p>{product.attributes.description}</p>
                 <p>Prix: {product.attributes.price} €</p>
                 <p>En stock: {product.attributes.inStock ? <Yes>Oui</Yes> : <No>Non</No>}</p>
