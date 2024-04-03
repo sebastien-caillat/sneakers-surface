@@ -4,8 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import colors from "../../utils/colors";
 
-import { API_BASE_URL } from "../../apiConfig";
-
 const ProductEditorContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -87,7 +85,7 @@ export default function ProductEditor() {
 
     useEffect(() => {
         if(id) {       
-            axios.get(`${API_BASE_URL}/api/products/${id}?populate=*`)
+            axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}?populate=*`)
                 .then(response => {
                     setProduct({ attributes: response.data.data.attributes });
                 })
@@ -191,7 +189,7 @@ export default function ProductEditor() {
 
             // Update the existing product
 
-            axios.put(`${API_BASE_URL}/api/products/${id}`, formData, config)
+            axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`, formData, config)
                 .then(() => {
                     navigate(`/product/${id}`);
                 })
@@ -202,7 +200,7 @@ export default function ProductEditor() {
 
             // Create a new product
 
-            axios.post(`${API_BASE_URL}/api/products`, formData, config)
+            axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/products`, formData, config)
                 .then(response => {
                     navigate(`/product/${response.data.id}`);
                 })
@@ -254,7 +252,7 @@ export default function ProductEditor() {
             </FormItem>
             <ImageFormItem>
                 {product.attributes.imageSmall.data.attributes.url ? 
-                    <ProductImage src={selectedImageSmall ? URL.createObjectURL(selectedImageSmall) : `${API_BASE_URL}${product.attributes.imageSmall.data.attributes.url}`} alt="Small" /> :
+                    <ProductImage src={selectedImageSmall ? URL.createObjectURL(selectedImageSmall) : `${process.env.REACT_APP_API_BASE_URL}${product.attributes.imageSmall.data.attributes.url}`} alt="Small" /> :
                     <PlaceholderImage />
                 }
                 <InputItem type="file" name="imageSmall" onChange={handleImageChange} />
@@ -265,7 +263,7 @@ export default function ProductEditor() {
             </FormItem>
             <ImageFormItem>
                 {product.attributes.imageLarge.data.attributes.url ? 
-                    <ProductImage src={selectedImageLarge ? URL.createObjectURL(selectedImageLarge) : `${API_BASE_URL}${product.attributes.imageLarge.data.attributes.url}`} alt="Large" /> :
+                    <ProductImage src={selectedImageLarge ? URL.createObjectURL(selectedImageLarge) : `${process.env.REACT_APP_API_BASE_URL}${product.attributes.imageLarge.data.attributes.url}`} alt="Large" /> :
                     <PlaceholderImage />
                 }
                 <InputItem type="file" name="imageLarge" onChange={handleImageChange} />

@@ -14,7 +14,6 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../components/context/AuthContext";
-import { API } from "../../constant";
 import { setToken } from "../../helpers";
 import styled from "styled-components";
 import colors from "../../utils/colors";
@@ -80,7 +79,7 @@ export default function SignIn() {
                 password: values.password,
             };
 
-            const response = await fetch(`${API}/auth/local`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/local`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

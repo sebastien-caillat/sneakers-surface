@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { AuthContext } from "../context/AuthContext"
 import { message } from "antd"
 import { BEARER } from "../../constant"
-import { API_BASE_URL } from "../../apiConfig";
 import { useEffect } from "react"
 import { getToken } from "../../helpers"
 
@@ -15,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const fetchLoggedInUser = async (token) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/me`, {
                 headers: {
                     "Authorization": `${BEARER} ${token}`
                 }

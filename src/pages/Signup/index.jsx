@@ -13,7 +13,6 @@ import {
 import React, { Fragment, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../components/context/AuthContext";
-import { API_BASE_URL } from "../../apiConfig";
 import { setToken } from "../../helpers"; 
 import styled from "styled-components";
 import colors from "../../utils/colors";
@@ -70,7 +69,7 @@ export default function Signup() {
   const onFinish = async (values) => {
     setIsLoading(true);
     try{
-      const response = await fetch(`${API_BASE_URL}/api/auth/local/register`, {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/local/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
