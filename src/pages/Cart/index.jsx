@@ -189,7 +189,7 @@ export default function Cart() {
 
             return (
               <Product key={product.id}>
-                <ProductImage src={`${process.env.API_BASE_URL}${product.attributes.imageSmall.data.attributes.url}`} alt={cart[index].title} />
+                <ProductImage src={`${process.env.REACT_APP_API_BASE_URL}${product.attributes.imageSmall.data.attributes.url}`} alt={cart[index].title} />
                 <ProductCategory>{cart[index].title}</ProductCategory>
                 <ProductCategory>
                   <QuantityInput 
