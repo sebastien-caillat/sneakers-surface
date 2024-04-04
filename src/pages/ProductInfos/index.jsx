@@ -135,9 +135,17 @@ export default function ProductInfos() {
 
     const handleDelete = () => {
         if (window.confirm('Voulez-vous vraiment supprimer ce produit ?')) {
-            axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`)
-            .then(response => {
-                // Handle successful delete
+
+            const authToken = localStorage.getItem('authToken');
+            const config = {
+                headers: {
+                'Authorization': `Bearer ${authToken}`,
+                }
+            }
+
+            axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`, config)
+            .then(() => {
+                navigate('/products')
             })
             .catch(error => {
                 console.error('There was an error!', error);
