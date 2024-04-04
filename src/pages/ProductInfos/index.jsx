@@ -145,6 +145,11 @@ export default function ProductInfos() {
 
             axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`, config)
             .then(() => {
+
+                let storedProducts = JSON.parse(localStorage.getItem('products')) || [];
+                storedProducts = storedProducts.filter(storedProduct => storedProduct.id !== id);
+                localStorage.setItem('products', JSON.stringify(storedProducts));
+
                 navigate('/products')
             })
             .catch(error => {
