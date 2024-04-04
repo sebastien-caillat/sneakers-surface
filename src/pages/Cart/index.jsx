@@ -96,8 +96,26 @@ export default function Cart() {
 
   const [productData, setProductData] = useState([]);
   const [orderId, setOrderId] = useState(null);
+  const [cartKey, setCartKey] = useState(localStorage.getItem('cartKey'));
   const navigate = useNavigate();
-  const cart = useMemo(() => JSON.parse(localStorage.getItem('products')) || [], []);
+  const cart = useMemo(() => JSON.parse(localStorage.getItem('products')) || [], [cartKey]);
+
+  // Update the cart key when the cart is updated
+
+  useEffect(() => {
+
+    const handleStorageChange = () => {
+      setCartKey(localStorage.getItem('cartKey'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+
+  }, []);
+
 
   // Retrieve the products data from the Strapi API 
 
@@ -159,6 +177,10 @@ export default function Cart() {
       const newOrderId = Math.floor(Math.random() * 1000000000000);
       setOrderId(newOrderId);
       console.log(orderId);
+
+      // Clean the LocalStorage of the ordered command
+
+      localStorage.removeItem('products');
 
       // Redirect to the confirmation page with the order ID as a state parameter
 

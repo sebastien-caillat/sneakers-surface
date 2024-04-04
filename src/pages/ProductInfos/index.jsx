@@ -150,6 +150,10 @@ export default function ProductInfos() {
                 storedProducts = storedProducts.filter(storedProduct => storedProduct.id !== id);
                 localStorage.setItem('products', JSON.stringify(storedProducts));
 
+                // This localStorage key is used to force the Cart component to re-render when a product is deleted
+                
+                localStorage.setItem('cartKey', Date.now());
+
                 navigate('/products')
             })
             .catch(error => {
