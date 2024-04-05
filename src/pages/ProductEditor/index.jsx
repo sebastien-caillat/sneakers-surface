@@ -84,6 +84,29 @@ export default function ProductEditor() {
     // Fetch the product data if a product id is provided
 
     useEffect(() => {
+        
+        const authToken = localStorage.getItem('authToken');
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        };
+
+        // Fetch the user data from the API
+
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/users/me`, config)
+            .then((response) => {
+                setProduct(prevProduct => ({
+                    ...prevProduct,
+                    attributes: {
+                        ...prevProduct.attributes,
+                        creator: response.data.username
+                    }
+                }))
+            })
+
+        // Fetch the product data from the API or create an empty object if no id was provided
+
         if(id) {       
             axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}?populate=*`)
                 .then(response => {
@@ -173,8 +196,8 @@ export default function ProductEditor() {
 
         // Append the images to formData
 
-        formData.append('files.imageSmall', product.attributes.imageSmall);
-        formData.append('files.imageLarge', product.attributes.imageLarge);
+        // formData.append('files.imageSmall', product.attributes.imageSmall);
+        // formData.append('files.imageLarge', product.attributes.imageLarge);
 
         console.log(formData);
 

@@ -92,6 +92,10 @@ const ConfirmationButton = styled.button`
   width: 160px;
 `
 
+const EmptyCartText = styled.p`
+  text-align: center;
+`
+
 export default function Cart() {
 
   const [productData, setProductData] = useState([]);
@@ -193,7 +197,7 @@ export default function Cart() {
     <div>
       <CartTitle>Mon panier</CartTitle>
       {cart.length === 0 ? (
-        <p>Votre panier est vide</p>
+        <EmptyCartText>Votre panier est vide</EmptyCartText>
       ) : (
         <ProductList>
 
