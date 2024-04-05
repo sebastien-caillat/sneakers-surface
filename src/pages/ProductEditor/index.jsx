@@ -191,7 +191,7 @@ export default function ProductEditor() {
             title: product.attributes.title,
             price: product.attributes.price,
             description: product.attributes.description,
-            inStock: product.attributes.inStock,
+            inStock: product.attributes.inStock || false,
             creator: product.attributes.creator,
             productId: uuidv4() // Generate a random id for the product
         }));
@@ -202,6 +202,9 @@ export default function ProductEditor() {
         // formData.append('files.imageLarge', product.attributes.imageLarge);
 
         console.log(formData);
+
+        console.log("selectedImageSmall", selectedImageSmall);
+        console.log("selectedImageLarge", selectedImageLarge);
 
         if (selectedImageSmall) {
             formData.append('files.imageSmall', selectedImageSmall);
