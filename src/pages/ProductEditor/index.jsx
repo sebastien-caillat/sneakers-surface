@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import colors from "../../utils/colors";
 
 const ProductEditorContainer = styled.div`
@@ -191,7 +192,8 @@ export default function ProductEditor() {
             price: product.attributes.price,
             description: product.attributes.description,
             inStock: product.attributes.inStock,
-            creator: product.attributes.creator
+            creator: product.attributes.creator,
+            productId: uuidv4() // Generate a random id for the product
         }));
 
         // Append the images to formData
